@@ -85,7 +85,7 @@ data S𝐿 (a ∷ sa → ★) ∷ [sa] → ★ where
   SNil ∷ S𝐿 a '[]
   (:&&) ∷ a x → S𝐿 a xs → S𝐿 a (x ': xs)
 
-mapS𝐿 ∷ ∀ (a ∷ sa → ★) (b ∷ sa → ★) (xs ∷ [sa]). (∀ (x ∷ sa). a x → b x) → S𝐿 a xs → S𝐿 b xs
+mapS𝐿 ∷ ∀ sa (a ∷ sa → ★) (b ∷ sa → ★) (xs ∷ [sa]). (∀ (x ∷ sa). a x → b x) → S𝐿 a xs → S𝐿 b xs
 mapS𝐿 _ SNil = SNil
 mapS𝐿 f (x :&& xs) = f x :&& mapS𝐿 f xs
 

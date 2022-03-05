@@ -22,7 +22,8 @@ instance MonadIO TH.Q where io = TH.runIO
 instance MonadQ TH.Q where qio = id
 
 instance Apply TH.Exp where (⊙) = TH.AppE
-instance Tup TH.Exp where tup = TH.TupE ∘ lazyList
+instance Tup TH.Exp where
+  tup x = TH.TupE (HS.Just HS.<$> lazyList x)
 
 instance Tup TH.Pat where tup = TH.TupP ∘ lazyList
 

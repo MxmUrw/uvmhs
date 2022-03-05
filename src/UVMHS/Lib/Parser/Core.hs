@@ -18,8 +18,8 @@ data ParserEnv t = ParserEnv
   , parserEnvErrorStack ∷ 𝐿 𝕊 ∧ 𝕊
   , parserEnvSkip ∷ t → 𝔹
   }
-makeLenses ''ParserEnv
-makePrettyRecord ''ParserEnv
+$(makeLenses ''ParserEnv)
+$(makePrettyRecord ''ParserEnv)
 
 parserEnv₀ ∷ ParserEnv t
 parserEnv₀ = ParserEnv 1 null (null :* "<top level>") (const False)
@@ -31,8 +31,8 @@ parserEnv₀ = ParserEnv 1 null (null :* "<top level>") (const False)
 data ParserOut t = ParserOut
   { parserOutError ∷ AddNull ParserError
   }
-makeLenses ''ParserOut
-makePrettyRecord ''ParserOut
+-- $(makeLenses ''ParserOut)
+$(makePrettyRecord ''ParserOut)
 
 instance Null (ParserOut t) where null = ParserOut null
 instance Append (ParserOut t) where ParserOut er₁ ⧺ ParserOut er₂ = ParserOut (er₁ ⧺ er₂)
@@ -79,7 +79,7 @@ pFail tc = do
   is ← getL parserStateInputL
   cp ← askL parserEnvContextPaddingL
   let sc = renderParserInput $ prefixBeforeN𝑆 (succ cp) (parserContextNewlines ∘ parserTokenContext) $ parserInputStream is
-  tellL parserOutErrorL $ AddNull $ ParserError tc sc $ dict [ec ↦ (ic :* makeStackTraces e (list $ reverse es))]
+  -- tellL parserOutErrorL $ AddNull $ ParserError tc sc $ dict [ec ↦ (ic :* makeStackTraces e (list $ reverse es))]
   abort
 
 pErr ∷ 𝕊 → Parser t a → Parser t a

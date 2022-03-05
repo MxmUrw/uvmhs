@@ -84,7 +84,7 @@ newtype k ⇰ v = 𝐷 { un𝐷 ∷ Map.Map k v }
   deriving (Eq,Ord)
 
 data (≟) (a ∷ k) (b ∷ k) ∷ ★ where
-  Refl ∷ ∀ (a ∷ k). a ≟ a
+  Refl ∷ ∀ k (a ∷ k). a ≟ a
 
 data P (a ∷ k) = P
   deriving (Eq,Ord,Show)
@@ -102,15 +102,15 @@ with ∷ W c → ((c) ⇒ a) → a
 with W x = x
 
 data Ex (t ∷ k → ★) ∷ ★ where
-  Ex ∷ ∀ (t ∷ k → ★) (a ∷ k). t a → Ex t
+  Ex ∷ ∀ k (t ∷ k → ★) (a ∷ k). t a → Ex t
 
 deriving instance (∀ a. Show (t a)) ⇒ Show (Ex t)
 
-unpack ∷ ∀ (t ∷ k → ★) (b ∷ ★). Ex t → (∀ (a ∷ k). t a → b) → b
+unpack ∷ ∀ k (t ∷ k → ★) (b ∷ ★). Ex t → (∀ (a ∷ k). t a → b) → b
 unpack (Ex x) f = f x
 
 data Ex_C (c ∷ k → Constraint) (t ∷ k → ★) ∷ ★ where
-  Ex_C ∷ ∀ (c ∷ k → Constraint) (t ∷ k → ★) (a ∷ k). (c a) ⇒ t a → Ex_C c t
+  Ex_C ∷ ∀ k (c ∷ k → Constraint) (t ∷ k → ★) (a ∷ k). (c a) ⇒ t a → Ex_C c t
 
 -- TODO: this could maybe be more general:
 -- deriving instance (∀ a. c a ⇒ Show (t a)) ⇒ Show (Ex_C c t)
